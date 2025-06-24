@@ -25,16 +25,24 @@ The application includes the following calculators:
 
 ---
 ## How to Run the App
+
 python app.py
+
 Then open your browser and navigate to:
+
 http://127.0.0.1:5000
+
 ---
 ## 🛠️ Technologies Used
 
 -Python 3
+
 -Flask (Web framework)
+
 -HTML/CSS for UI
+
 -Math & Engineering models
+
 
 
 ![image](https://github.com/user-attachments/assets/259069ae-a1be-4e6c-80c5-241e5487f829)
