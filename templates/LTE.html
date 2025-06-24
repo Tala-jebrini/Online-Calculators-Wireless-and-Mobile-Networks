@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4G LTE system Calculator</title>
+    <style>
+        body {
+            font-family: "Times New Roman", sans-serif;
+            font-size: 16px;
+            background-color: #f0f0f0;
+            color: #001;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: lightseagreen;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .form-group label {
+            margin-right: 10px;
+            width: 150px;
+            text-align: start;
+        }
+
+        .form-group input, .form-group select {
+            font-family: "Times New Roman", sans-serif;
+            font-size: 15px;
+            flex: 1;
+            padding: 10px;
+            box-sizing: border-box;
+            border-radius: 10px;
+            border: 2px solid black;
+        }
+        .form-group button {
+            font-family: "Times New Roman", sans-serif;
+            padding: 10px 50px;
+            background-color: #008080;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        .form-group button:hover {
+            background-color: #AED6C9;
+        }
+         .back-to-home-button {
+    /*display: inline-block;*/
+    padding: 10px 50px;
+    background-color: #008080;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+    margin: 20px auto; /* Auto margin for centering horizontally */
+    text-decoration: none; /* Remove underline from anchor tag */
+    text-align: center; /* Center align text */
+    display: block; /* Ensure it behaves like a block-level element */
+    width: fit-content; /* Fit the button width to its content */
+}
+
+.back-to-home-button:hover {
+    background-color: #AED6C9;
+}
+        .results, .error-message {
+            margin-top: 20px;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        .error-message {
+            color: red;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        {% extends "base.html" %}
+
+{% block title %}4G LTE system Calculator{% endblock %}
+
+{% block content %}
+        <h1>4G LTE system Calculator</h1>
+
+        <form method="POST">
+    <div class="form-group">
+        <label for="bandwidth">Bandwidth (kHz):</label>
+        <input type="text" id="bandwidth" name="bandwidth" value="{{ form_data['bandwidth'] }}">
+    </div>
+    <div class="form-group">
+        <label for="OFDM_symbols">OFDM symbols per resource block:</label>
+        <input type="text" id="OFDM_symbols" name="OFDM_symbols" required>
+    </div>
+    <div class="form-group">
+        <label for="resource_block_duration">Resource block duration (ms):</label>
+        <input type="text" id="resource_block_duration" name="resource_block_duration" required>
+    </div>
+    <div class="form-group">
+        <label for="modulation_bits">Bits Modulator :</label>
+        <select id="modulation_bits" name="modulation_bits">
+            <option value="" disabled selected>Select one option</option>
+            <option value="2">QPSK</option> <!-- (Quadrature Phase Shift Keying): 2 bits per symbol-->
+            <option value="4">16-QAM</option> <!-- (16-Quadrature Amplitude Modulation): 4 bits per symbol -->
+            <option value="6">64-QAM</option>
+            <option value="8">256-QAM</option>
+            <option value="10">1024-QAM</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="parallel_resource">Number of parallel resource blocks:</label>
+        <input type="text" id="parallel_resource" name="parallel_resource" required>
+    </div>
+    <div class="form-group">
+        <button type="submit">Calculate</button>
+    </div>
+</form>
+         {% if error_message %}
+        <div class="error-message">
+            <strong>Error:</strong> {{ error_message }}
+        </div>
+        {% endif %}
+
+
+         {% if results %}
+    <div class="results">
+            <h2>Results:</h2>
+            <p>Number of bits per resource element: {{ results['Number of bits per resource element'] }}</p>
+            <p>Number of bits per OFDM symbol: {{ results['Number of bits per OFDM symbol'] }}</p>
+            <p>Number of bits per OFDM resource block: {{ results['Number of bits per OFDM resource block'] }}</p>
+            <p>Maximum transmission rate for parallel resource blocks (KHz): {{ results['Maximum transmission rate for parallel resource blocks'] }}</p>
+    </div>
+    {% endif %}
+             <a href="/" class="back-to-home-button">Back to Home</a>
+            {% endblock %}
+            <div style="margin-top: 20px;">
+            </div>
+        </div>
+</body>
+</html>

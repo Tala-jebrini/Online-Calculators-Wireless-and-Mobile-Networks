@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transmit Power Calculator</title>
+    <style>
+        body {
+            font-family: "Times New Roman", sans-serif;
+            font-size: 16px;
+            background-color: #f0f0f0;
+            color: #001;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: lightseagreen;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .form-group label {
+            margin-right: 10px;
+            width: 150px;
+            text-align: start;
+        }
+        .form-group input, .form-group select {
+            flex: 1;
+            padding: 10px;
+            box-sizing: border-box;
+            border-radius: 10px;
+        }
+        .form-group button {
+            font-family: "Times New Roman", sans-serif;
+            padding: 10px 50px;
+            background-color: #008080;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        .form-group button:hover {
+            background-color: #AED6C9;
+        }
+         .back-to-home-button {
+    /*display: inline-block;*/
+    padding: 10px 50px;
+    background-color: #008080;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+    margin: 20px auto; /* Auto margin for centering horizontally */
+    text-decoration: none; /* Remove underline from anchor tag */
+    text-align: center; /* Center align text */
+    display: block; /* Ensure it behaves like a block-level element */
+    width: fit-content; /* Fit the button width to its content */
+}
+
+.back-to-home-button:hover {
+    background-color: #AED6C9;
+}
+        .results {
+            margin-top: 20px;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        {% extends "base.html" %}
+
+{% block title %}Total Transmit Power Calculator{% endblock %}
+
+{% block content %}
+        <h1>Transmit Power Calculator</h1>
+
+        <form method="POST">
+            <div class="form-group">
+                <label for="path_loss">Path Loss:</label>
+                <input type="text" id="path_loss" name="path_loss" required>
+            </div>
+            <div class="form-group">
+                <label for="frequency">Frequency (GHz):</label>
+                <input type="text" id="frequency" name="frequency" required>
+            </div>
+            <div class="form-group">
+                <label for="transmit_antenna_gain">Transmit Antenna Gain (dB):</label>
+                <input type="text" id="transmit_antenna_gain" name="transmit_antenna_gain" required>
+            </div>
+            <div class="form-group">
+                <label for="receive_antenna_gain">Receive Antenna Gain (dB):</label>
+                <input type="text" id="receive_antenna_gain" name="receive_antenna_gain" required>
+            </div>
+            <div class="form-group">
+                <label for="data_rate">Data Rate (kbps):</label>
+                <input type="text" id="data_rate" name="data_rate" required>
+            </div>
+            <div class="form-group">
+                <label for="feed_line_loss">Feed Line Loss (dB):</label>
+                <input type="text" id="feed_line_loss" name="feed_line_loss" required>
+            </div>
+            <div class="form-group">
+                <label for="other_losses">Other Losses (dB):</label>
+                <input type="text" id="other_losses" name="other_losses" required>
+            </div>
+            <div class="form-group">
+                <label for="fade_margin">Fade Margin (dB):</label>
+                <input type="text" id="fade_margin" name="fade_margin" required>
+            </div>
+            <div class="form-group">
+                <label for="receiver_amplifier_gain">Receiver Amplifier Gain (dB):</label>
+                <input type="text" id="receiver_amplifier_gain" name="receiver_amplifier_gain" required>
+            </div>
+            <div class="form-group">
+                <label for="transmit_amplifier_gain">Transmit Amplifier Gain (dB):</label>
+                <input type="text" id="transmit_amplifier_gain" name="transmit_amplifier_gain" required>
+            </div>
+            <div class="form-group">
+                <label for="noise_figure_total">Noise Figure Total (dB):</label>
+                <input type="text" id="noise_figure_total" name="noise_figure_total" required>
+            </div>
+            <div class="form-group">
+                <label for="noise_temperature">Noise Temperature (K):</label>
+                <input type="text" id="noise_temperature" name="noise_temperature" required>
+            </div>
+            <div class="form-group">
+                <label for="link_margin">Link Margin (dB):</label>
+                <input type="text" id="link_margin" name="link_margin" required>
+            </div>
+            <div class="form-group">
+                <label for="modulation_signal">Modulation Signal:</label>
+                <select id="modulation_signal" name="modulation_signal">
+                    <option value="BPSK/QPSK">BPSK/QPSK</option>
+                    <option value="8-PSK">8-PSK</option>
+                    <option value="16-PSK">16-PSK</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="ber">Bit Error Rate (BER):</label>
+                <select id="ber" name="ber">
+                    <option value="10^-2">10^-2</option>
+                    <option value="10^-4">10^-4</option>
+                    <option value="10^-6">10^-6</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <button type="submit">Calculate</button>
+
+            </div>
+        </form>
+         {% if results %}
+    <div class="results">
+        <h2>Results:</h2>
+        {% if results.error %}
+        <p>Error: {{ results.error }}</p>
+        {% else %}
+        <p>Total Transmit Power (dB): {{ results['Total Transmit Power (dB)'] }}</p>
+        <p>Total Transmit Power (dBm): {{ results['Total Transmit Power (dBm)'] }}</p>
+        <p>Total Transmit Power (W): {{ results['Total Transmit Power (W)'] }}</p>
+        {% endif %}
+    </div>
+    {% endif %}
+             <a href="/" class="back-to-home-button">Back to Home</a>
+            {% endblock %}
+            <div style="margin-top: 20px;">
+
+            </div>
+        </div>
+
+
+</body>
+</html>

@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Communication Calculator</title>
+    <style>
+        body {
+            font-family: "Times New Roman", sans-serif;
+            font-size: 16px;
+            background-color: #f0f0f0;
+            color: #001;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: lightseagreen;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .form-group label {
+            margin-right: 10px;
+            width: 150px;
+            text-align: start;
+        }
+        .form-group input {
+            flex: 1;
+            padding: 10px;
+            box-sizing: border-box;
+            border-radius: 10px;
+        }
+        .form-group button {
+            font-family: "Times New Roman", sans-serif;
+            padding: 10px 50px;
+            background-color: #008080;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        .form-group button:hover {
+            background-color: #AED6C9;
+        }
+        .results {
+            margin-top: 20px;
+        }
+        /* Style for the Back to Home button */
+        .back-to-home-button {
+    /*display: inline-block;*/
+    padding: 10px 50px;
+    background-color: #008080;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+    margin: 20px auto; /* Auto margin for centering horizontally */
+    text-decoration: none; /* Remove underline from anchor tag */
+    text-align: center; /* Center align text */
+    display: block; /* Ensure it behaves like a block-level element */
+    width: fit-content; /* Fit the button width to its content */
+}
+
+.back-to-home-button:hover {
+    background-color: #AED6C9;
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        {% extends "base.html" %}
+
+{% block title %}Digital Communication System Calculator{% endblock %}
+
+{% block content %}
+        <h1>Digital Communication System Calculator</h1>
+        <form method="POST">
+            <div class="form-group">
+                <label for="bandwidth_khz">Bandwidth (kHz):</label>
+                <input type="text" id="bandwidth_khz" name="bandwidth_khz" value="{{ form_data['bandwidth_khz'] }}">
+            </div>
+            <div class="form-group">
+                <label for="quantizer_bits">Quantizer Bits:</label>
+                <input type="text" id="quantizer_bits" name="quantizer_bits" value="{{ form_data['quantizer_bits'] }}">
+            </div>
+            <div class="form-group">
+                <label for="source_encoder_rate">Source Encoder Rate:</label>
+                <input type="text" id="source_encoder_rate" name="source_encoder_rate" value="{{ form_data['source_encoder_rate'] }}">
+            </div>
+            <div class="form-group">
+                <label for="channel_encoder_rate">Channel Encoder Rate:</label>
+                <input type="text" id="channel_encoder_rate" name="channel_encoder_rate" value="{{ form_data['channel_encoder_rate'] }}">
+            </div>
+            <div class="form-group">
+                <label for="interleaver_bits">Interleaver Bits:</label>
+                <input type="text" id="interleaver_bits" name="interleaver_bits" value="{{ form_data['interleaver_bits'] }}">
+            </div>
+            <div class="form-group">
+                <button type="submit">Calculate</button>
+
+            </div>
+        </form>
+        {% if results %}
+        <div class="results">
+            <h2>Results:</h2>
+            <p>Maximum distance between transmitter and receiver: {{ results['Maximum distance between transmitter and receiver for reliable communication (meter)'] }}</p>
+            <p>Maximum cell size: {{ results['Maximum cell size assuming hexagonal cells'] }}</p>
+            <p>The bit rate at the output of the source encoder (kbps): {{ results['The bit rate at the output of the source encoder (kbps)'] }}</p>
+            <p>The bit rate at the output of the channel encoder (kbps): {{ results['The bit rate at the output of the channel encoder (kbps)'] }}</p>
+            <p>The bit rate at the output of the interleaver (kbps): {{ results['The bit rate at the output of the interleaver (kbps)'] }}</p>
+        </div>
+        {% endif %}
+       <a href="/" class="back-to-home-button">Back to Home</a>
+        {% endblock %}
+
+        <div style="margin-top: 20px;">
+        </div>
+    </div>
+
+
+</body>
+</html>

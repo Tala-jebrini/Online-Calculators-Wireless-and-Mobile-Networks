@@ -1,0 +1,64 @@
+/* Reset styles and global settings */
+body, html {
+    font-size: 15px;
+    margin: 0;
+    padding: 0;
+    font-family: "Times New Roman", sans-serif;
+}
+
+/* Background image styling */
+.background-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("../static/net3.jpg") no-repeat center center fixed;
+    background-size: cover;
+    /*opacity: 0.2; /* Adjust opacity to your preference */
+    z-index: -1;
+}
+
+/* Container styling */
+.container {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 10px;
+    max-width: 800px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.container h1 {
+    color: #000011;
+}
+
+.container p {
+    font-size: 18px;
+    /*color: #666;*/
+    color: #001;
+}
+
+.container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.container ul li {
+    margin-bottom: 10px;
+}
+
+.container ul li a {
+    display: block;
+    padding: 10px 15px;
+    background-color: #008080;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.container ul li a:hover {
+    background-color: #AED6C9;
+}

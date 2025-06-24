@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transmit Power Calculator</title>
+    <style>
+        body {
+            font-family: "Times New Roman", sans-serif;
+            font-size: 16px;
+            background-color: #f0f0f0;
+            color: #001;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: lightseagreen;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .form-group label {
+            margin-right: 10px;
+            width: 150px;
+            text-align: start;
+        }
+
+        .form-group input, .form-group select {
+            font-family: "Times New Roman", sans-serif;
+            font-size: 15px;
+            flex: 1;
+            padding: 10px;
+            box-sizing: border-box;
+            border-radius: 10px;
+            border: 2px solid black;
+        }
+        .form-group button {
+            font-family: "Times New Roman", sans-serif;
+            padding: 10px 50px;
+            background-color: #008080;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        .form-group button:hover {
+            background-color: #AED6C9;
+        }
+         .back-to-home-button {
+    /display: inline-block;/
+    padding: 10px 50px;
+    background-color: #008080;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+    margin: 20px auto; /* Auto margin for centering horizontally */
+    text-decoration: none; /* Remove underline from anchor tag */
+    text-align: center; /* Center align text */
+    display: block; /* Ensure it behaves like a block-level element */
+    width: fit-content; /* Fit the button width to its content */
+}
+
+.back-to-home-button:hover {
+    background-color: #AED6C9;
+}
+        .results {
+            margin-top: 20px;
+            background-color: #fff; /* Result background color */
+            padding: 15px; /* Result padding */
+            border-radius: 8px; /* Result border radius */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Result box shadow */
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% extends "base.html" %}
+
+{% block title %}Throughput in percent of Multiple Access techniques Calculator{% endblock %}
+
+{% block content %}
+        <h2>Throughput in percent of Multiple Access techniques Calculator</h2>
+        <form action="{{ url_for('throughput_calculator') }}" method="post">
+            <div class="form-group">
+                <label for="bandwidth">Bandwidth (Mbps):</label>
+                <input type="text" id="bandwidth" name="bandwidth" value="{{ form_data.get('bandwidth', '') }}" required>
+            </div>
+            <div class="form-group">
+                <label for="frame_size">Frame Size (Kbits):</label>
+                <input type="text" id="frame_size" name="frame_size" value="{{ form_data.get('frame_size', '') }}" required>
+            </div>
+            <div class="form-group">
+                <label for="frame_rate">Frame Rate (Kfps):</label>
+                <input type="text" id="frame_rate" name="frame_rate" value="{{ form_data.get('frame_rate', '') }}" required>
+            </div>
+            <div class="form-group">
+                <label for="propagation_time">Max Signal Propagation Time (microseconds):</label>
+                <input type="text" id="propagation_time" name="propagation_time" value="{{ form_data.get('propagation_time', '') }}" required>
+            </div>
+            <div class="form-group">
+                <label for="mac_protocol">MAC Protocol:</label>
+                <select id="mac_protocol" name="mac_protocol">
+                    <option value="" disabled selected>Select MAC Protocol</option>
+                    <option value="pure ALOHA"> Pure ALOHA</option>
+                    <option value="slotted ALOHA">Slotted ALOHA</option>
+                    <option value="unslotted nonpersistent CSMA">Unslotted Nonpersistent CSMA</option>
+                    <option value="slotted nonpersistent CSMA"> Slotted Nonpersistent CSMA</option>
+                    <option value="slotted 1-persistent CSMA"> Slotted 1-Persistent CSMA</option>
+
+                </select>
+            </div>
+
+            <div class="form-group">
+                <button type="submit">Calculate</button>
+            </div>
+        </form>
+        {% if results %}
+        <div class="results">
+            <h2>Results:</h2>
+            {% if results.error %}
+            <p>Error: {{ results.error }}</p>
+            {% else %}
+                {% for mac_protocol, value in results.items() %}
+                    <p>Throughput Percentage ({{ mac_protocol }}): {{ value }}%</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <a href="/" class="back-to-home-button">Back to Home</a>
+         {% endblock %}
+        <div style="margin-top: 20px;">
+    </div>
+         </div>
+</body>
+</html>

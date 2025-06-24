@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    {% extends "base.html" %}
+    {% block title %}Home{% endblock %}
+    {% block content %}
+    <div class="container">
+        <h1>Welcome to Wireless and Mobile Networks - ENCS5323</h1>
+        <p>Hadeel Froukh 1201585 & Tala Jebrini 1200493</p>
+        <p>Online Calculators</p>
+        <ul>
+            <li><a href="{{ url_for('digital_communication_calculator') }}">Digital Communication System Calculator</a></li>
+             <li><a href="{{ url_for('LTE_system_calculator') }}">4G LTE System Calculator</a></li>
+            <li><a href="{{ url_for('transmit_power_calculator') }}">Total Transmit Power Calculator</a></li>
+            <li><a href="{{ url_for('throughput_calculator') }}">Throughput in percent of Multiple Access techniques Calculator</a></li>
+            <li><a href="{{ url_for('cellular_system_calculator') }}">Cellular System Calculator</a></li>
+        </ul>
+    </div>
+    {% endblock %}
+</body>
+</html>

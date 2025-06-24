@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cellular System Calculator</title>
+    <style>
+         body {
+            font-family: "Times New Roman", sans-serif;
+            font-size: 16px;
+            background-color: #f0f0f0;
+            color: #001;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: lightseagreen;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .form-group label {
+            margin-right: 10px;
+            width: 150px;
+            text-align: start;
+        }
+
+        .form-group input, .form-group select {
+            font-family: "Times New Roman", sans-serif;
+            font-size: 15px;
+            flex: 1;
+            padding: 10px;
+            box-sizing: border-box;
+            border-radius: 10px;
+            border: 2px solid black;
+        }
+        .form-group button {
+            font-family: "Times New Roman", sans-serif;
+            padding: 10px 50px;
+            background-color: #008080;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        .form-group button:hover {
+            background-color: #AED6C9;
+        }
+         .back-to-home-button {
+    /*display: inline-block;*/
+    padding: 10px 50px;
+    background-color: #008080;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+    margin: 20px auto; /* Auto margin for centering horizontally */
+    text-decoration: none; /* Remove underline from anchor tag */
+    text-align: center; /* Center align text */
+    display: block; /* Ensure it behaves like a block-level element */
+    width: fit-content; /* Fit the button width to its content */
+}
+
+.back-to-home-button:hover {
+    background-color: #AED6C9;
+}
+        .results {
+            margin-top: 20px;
+            background-color: #fff; /* Result background color */
+            padding: 15px; /* Result padding */
+            border-radius: 8px; /* Result border radius */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Result box shadow */
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        {% extends "base.html" %}
+
+{% block title %}Cellular System Calculator{% endblock %}
+
+{% block content %}
+        <h1>Cellular System Calculator</h1>
+
+        <form method="POST">
+            <div class="form-group">
+                <label for="timeslots">Timeslots per carrier:</label>
+                <input type="text" id="timeslots" name="timeslots" required>
+            </div>
+            <div class="form-group">
+                <label for="area">Whole Area (m^2):</label>
+                <input type="text" id="area" name="area" required>
+            </div>
+            <div class="form-group">
+                <label for="number_of_users">Total number of users:</label>
+                <input type="text" id="number_of_users" name="number_of_users" required>
+            </div>
+            <div class="form-group">
+                <label for="calls_per_day">Average calls per day:</label>
+                <input type="text" id="calls_per_day" name="calls_per_day" required>
+            </div>
+            <div class="form-group">
+                <label for="call_duration">Average call duration (minutes):</label>
+                <input type="text" id="call_duration" name="call_duration" required>
+            </div>
+            <div class="form-group">
+                <label for="call_drop_probability">Call drop probability:</label>
+                <input type="text" id="call_drop_probability" name="call_drop_probability" required>
+            </div>
+            <div class="form-group">
+                <label for="SIR">SIR (dB):</label>
+                <input type="text" id="SIR" name="SIR" required>
+            </div>
+            <div class="form-group">
+                <label for="reference_distance">Reference distance (meter):</label>
+                <input type="text" id="reference_distance" name="reference_distance" required>
+            </div>
+            <div class="form-group">
+                <label for="reference_distance_power">Power at reference distance (dB):</label>
+                <input type="text" id="reference_distance_power" name="reference_distance_power" required>
+            </div>
+            <div class="form-group">
+                <label for="path_loss_exponent">Path loss exponent:</label>
+                <input type="text" id="path_loss_exponent" name="path_loss_exponent" required>
+            </div>
+            <div class="form-group">
+                <label for="receiver_sensitivity">Receiver sensitivity (Micro watt):</label>
+                <input type="text" id="receiver_sensitivity" name="receiver_sensitivity" required>
+            </div>
+
+            <div class="form-group">
+                <button type="submit">Calculate</button>
+
+            </div>
+        </form>
+         {% if results %}
+    <div class="results">
+        <h2>Results:</h2>
+        <p>Maximum distance between transmitter and receiver for reliable communication (meter): {{ results['Maximum distance between transmitter and receiver for reliable communication (meter)'] }}</p>
+        <p>Maximum cell size assuming hexagonal cells: {{ results['Maximum cell size assuming hexagonal cells'] }}</p>
+        <p>The number of cells in the service area: {{ results['The number of cells in the service area'] }}</p>
+        <p>Traffic load in the whole cellular system (Erlangs): {{ results['Traffic load in the whole cellular system (Erlangs)'] }}</p>
+        <p>Traffic load in each cell (Erlangs): {{ results['Traffic load in each cell (Erlangs)'] }}</p>
+        <p>Number of cells in each cluster: {{ results['Number of cells in each cluster'] }}</p>
+        <p>Number of channels: {{ results['Number of channels'] }}</p>
+        <p>Minimum number of carriers needed per cell: {{ results['Minimum number of carriers needed per cell'] }}</p>
+        <p>Minimum number of carriers needed (in the whole system): {{ results['Minimum number of carriers needed (in the whole system)'] }}</p>
+    </div>
+
+    {% endif %}
+             <a href="/" class="back-to-home-button">Back to Home</a>
+            {% endblock %}
+            <div style="margin-top: 20px;">
+
+            </div>
+        </div>
+</body>
+</html>
